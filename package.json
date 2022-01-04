@@ -1,0 +1,20 @@
+{
+  "name": "qspiders-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node server",
+    "dev": "nodemon -r esm server.js"
+  },
+  "author": "shashi",
+  "license": "MIT",
+  "dependencies": {
+    "consola": "^2.15.3",
+    "dotenv": "^10.0.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
