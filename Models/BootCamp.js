@@ -94,7 +94,8 @@ let BootCampSchema = new Schema(
       default: false,
     },
   },
-  { timestamps: true }
+
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 BootCampSchema.pre("save", function (next) {
@@ -116,6 +117,20 @@ BootCampSchema.pre("save", async function (next) {
   };
   this.address = undefined;
   next();
+});
+
+//cascade delete courses when a bootcamp is deleted
+BootCampSchema.pre("remove", async function (next) {
+  await this.model("Course").deleteMany({ bootcamp: this._id });
+  next();
+});
+
+//reverse populate with virtuals
+BootCampSchema.virtual("courses", {
+  ref: "Course",
+  localField: "_id",
+  foreignField: "bootcamp",
+  justOne: false,
 });
 
 export let BootCampModel = model("Bootcamp", BootCampSchema);
